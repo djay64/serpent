@@ -5,7 +5,7 @@ window.onload = function()
     var canvasHeight = 600 ; 
     var blockSize = 30 ; 
     var ctx; 
-    var delay = 300;   // joue sur la vitesse du serpent
+    var delay = 100;   // joue sur la vitesse du serpent
     var snakee; 
     var applee; 
     var widthBlocks = canvasWidth/blockSize; 
@@ -39,11 +39,13 @@ else {
     if(snakee.isEatingApple(applee))
     {
 
+        snakee.ateApple = true ; 
+
 do {
-    applee.setNewPosition ; 
+    applee.setNewPosition() ; 
 }
 
-while(applee.isOnSnake(snakee))
+while(applee.isOnSnake(snakee)) ;
 
 
 
@@ -106,7 +108,10 @@ switch(this.direction)
             throw("invalid direction") ; 
     }
 this.body.unshift(nextPosition) ;
-this.body.pop(); 
+if (!this.ateApple)
+                this.body.pop();
+            else
+                this.ateApple = false;
     } ; 
     this.setdirection = function(newDirection)
     {
