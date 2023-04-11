@@ -10,6 +10,7 @@ window.onload = function()
     var applee; 
     var widthBlocks = canvasWidth/blockSize; 
     var heightBlocks = canvasHeight/blockSize; 
+    var score ; 
 
     init(); 
 
@@ -23,6 +24,7 @@ function init()
     ctx = canvas.getContext('2d');
     snakee = new Snake([[6,4],[5,4],[4,4]],"right"); 
     applee = new Apple([10,10]);
+    score = 0 ; 
     refreshCanvas() ; 
     }
 
@@ -31,7 +33,7 @@ function refreshCanvas()
     snakee.advance() ;
 if (snakee.checkCollision())
 {
-    // game over
+     gameOver() ; 
 }
 
 else { 
@@ -40,6 +42,7 @@ else {
     {
 
         snakee.ateApple = true ; 
+        score ++ ; 
 
 do {
     applee.setNewPosition() ; 
@@ -53,15 +56,40 @@ while(applee.isOnSnake(snakee)) ;
     }
     
     ctx.clearRect(0,0,canvasWidth, canvasHeight) ;
-
     snakee.draw(); 
-     
     applee.draw(); 
+    drawScore(); 
     setTimeout(refreshCanvas,delay) ;
-     }
-   
-    
+     }    
 }
+
+
+
+function gameOver() {
+
+    ctx.save();
+    ctx.fillText("Game Over", 5, 15);
+    ctx.fillText("Appuyer sur la touche espace pour rejouer", 5, 30);
+    ctx.restore();
+}
+
+function restart()
+{
+    snakee = new Snake([[6,4],[5,4],[4,4],[3,4],[2,4]],"right");
+    applee = new Apple([10,10]);
+    score = 0 ; 
+    refreshCanvas();
+
+}
+
+function drawScore()
+{
+    ctx.save();
+    ctx.fillText(score.toString(), 5, canvasHeight - 5);
+    ctx.restore(); 
+}
+
+
 
 function drawBlock(ctx,position) 
 {
@@ -253,6 +281,9 @@ break ;
 case 40: 
 newDirection = "down"
 break ; 
+case 32:
+    restart(); 
+    return ; 
 default:
     return ; 
     }
