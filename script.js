@@ -5,7 +5,7 @@ window.onload = function()
     var canvasHeight = 600 ; 
     var blockSize = 30 ; 
     var ctx; 
-    var delay = 300;   // joue sur la vitesse du serpent
+    var delay = 100;   // joue sur la vitesse du serpent
     var snakee; 
     var applee; 
     var widthBlocks = canvasWidth/blockSize; 
