@@ -5,7 +5,7 @@ window.onload = function()
     var canvasHeight = 600 ; 
     var blockSize = 30 ; 
     var ctx; 
-    var delay = 100;   // joue sur la vitesse du serpent
+    var delay = 300;   // joue sur la vitesse du serpent
     var snakee; 
     var applee; 
     var widthBlocks = canvasWidth/blockSize; 
@@ -19,7 +19,11 @@ function init()
     canvas = document.createElement('canvas') ;
     canvas.width = canvasWidth ;
     canvas.height = canvasHeight ;
-    canvas.style.border = "1px solid" ;
+    canvas.style.border = "30px solid gray" ;
+    canvas.style.margin = "50px auto"; 
+    canvas.style.display = "block" ; 
+   // canvas.style.backgroundColor = "#C0DFEF" ; 
+    canvas.style.backgroundImage = "url(mountain-g0f98262b2_1280.jpg)" ; 
     document.body.appendChild(canvas) ; 
     ctx = canvas.getContext('2d');
     snakee = new Snake([[6,4],[5,4],[4,4]],"right"); 
@@ -56,9 +60,9 @@ while(applee.isOnSnake(snakee)) ;
     }
     
     ctx.clearRect(0,0,canvasWidth, canvasHeight) ;
+    drawScore(); 
     snakee.draw(); 
     applee.draw(); 
-    drawScore(); 
     setTimeout(refreshCanvas,delay) ;
      }    
 }
@@ -68,8 +72,19 @@ while(applee.isOnSnake(snakee)) ;
 function gameOver() {
 
     ctx.save();
-    ctx.fillText("Game Over", 5, 15);
-    ctx.fillText("Appuyer sur la touche espace pour rejouer", 5, 30);
+    ctx.font = "bold 70px sans-serif" ; 
+    ctx.fillStyle = "black" ; 
+    ctx.textAlign = "center" ;
+    ctx.textBaseline = "middle" ; 
+    ctx.strokeStyle = "white" ; 
+    ctx.lineWidth = 5 ; 
+    var centreX = canvasWidth/2 ; 
+    var centreY = canvasHeight/2 ;
+    ctx.strokeText("Game Over", centreX, centreY -180);
+    ctx.fillText("Game Over", centreX, centreY -180);
+    ctx.font = "bold 30px sans-serif" ; 
+    ctx.strokeText("Appuyer sur la touche espace pour rejouer", centreX, centreY -120);
+    ctx.fillText("Appuyer sur la touche espace pour rejouer", centreX, centreY -120);
     ctx.restore();
 }
 
@@ -79,13 +94,18 @@ function restart()
     applee = new Apple([10,10]);
     score = 0 ; 
     refreshCanvas();
-
 }
 
 function drawScore()
 {
     ctx.save();
-    ctx.fillText(score.toString(), 5, canvasHeight - 5);
+    ctx.font = "bold 200px sans-serif" ; 
+    ctx.fillStyle = "gray" ; 
+    ctx.textAlign = "center" ; 
+    ctx.textBaseline = "middle" ; 
+    var centreX = canvasWidth/2 ; 
+    var centreY = canvasHeight/2 ; 
+    ctx.fillText(score.toString(), centreX, centreY);
     ctx.restore(); 
 }
 
