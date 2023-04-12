@@ -11,6 +11,7 @@ window.onload = function()
     var widthBlocks = canvasWidth/blockSize; 
     var heightBlocks = canvasHeight/blockSize; 
     var score ; 
+    var timeout ; 
 
     init(); 
 
@@ -44,26 +45,20 @@ else {
 
     if(snakee.isEatingApple(applee))
     {
-
         snakee.ateApple = true ; 
         score ++ ; 
-
 do {
     applee.setNewPosition() ; 
 }
 
 while(applee.isOnSnake(snakee)) ;
-
-
-
-
     }
     
     ctx.clearRect(0,0,canvasWidth, canvasHeight) ;
     drawScore(); 
     snakee.draw(); 
     applee.draw(); 
-    setTimeout(refreshCanvas,delay) ;
+    timeout = setTimeout(refreshCanvas,delay) ;
      }    
 }
 
@@ -93,6 +88,7 @@ function restart()
     snakee = new Snake([[6,4],[5,4],[4,4],[3,4],[2,4]],"right");
     applee = new Apple([10,10]);
     score = 0 ; 
+    clearTimeout(timeout) ; 
     refreshCanvas();
 }
 
