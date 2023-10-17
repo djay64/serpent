@@ -40,9 +40,7 @@ if (snakee.checkCollision())
 {
      gameOver() ; 
 }
-
-else { 
-
+else {
     if(snakee.isEatingApple(applee))
     {
         snakee.ateApple = true ; 
@@ -50,10 +48,11 @@ else {
 do {
     applee.setNewPosition() ; 
 }
-
 while(applee.isOnSnake(snakee)) ;
     }
-    
+    if(score % 5 == 0){
+        speedUp();
+    }
     ctx.clearRect(0,0,canvasWidth, canvasHeight) ;
     drawScore(); 
     snakee.draw(); 
@@ -62,6 +61,9 @@ while(applee.isOnSnake(snakee)) ;
      }    
 }
 
+    function speedUp(){
+        delay /= 2;
+    }
 
 
 function gameOver() {
