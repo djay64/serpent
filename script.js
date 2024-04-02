@@ -27,10 +27,16 @@ function init()
    // canvas.style.backgroundColor = "#C0DFEF" ; 
     canvas.style.backgroundImage = "url(mountain-g0f98262b2_1280.jpg)" ; 
     document.body.appendChild(canvas) ;
-    snakee = new Snake([[6,4],[5,4],[4,4]],"right"); 
-    applee = new Apple([10,10]);
-    score = 0 ; 
-    refreshCanvas() ; 
+    launch();
+    }
+
+function launch()
+    {
+        snakee = new Snake([[6,4],[5,4],[4,4],[3,4],[2,4]],"right");
+        applee = new Apple([10,10]);
+        score = 0 ;
+        clearTimeout(timeout) ;
+        refreshCanvas();
     }
 
 function refreshCanvas()
@@ -82,15 +88,6 @@ function gameOver() {
     ctx.strokeText("Appuyer sur la touche espace pour rejouer", centreX, centreY -120);
     ctx.fillText("Appuyer sur la touche espace pour rejouer", centreX, centreY -120);
     ctx.restore();
-}
-
-function restart()
-{
-    snakee = new Snake([[6,4],[5,4],[4,4],[3,4],[2,4]],"right");
-    applee = new Apple([10,10]);
-    score = 0 ; 
-    clearTimeout(timeout) ; 
-    refreshCanvas();
 }
 
 function drawScore()
@@ -296,7 +293,7 @@ case 40:
 newDirection = "down"
 break ; 
 case 32:
-    restart(); 
+    launch();
     return ; 
 default:
     return ; 
