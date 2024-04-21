@@ -1,4 +1,4 @@
-window.onload = function()
+window.onload = () =>
 {
     const canvas = document.createElement('canvas') ;;
     const canvasWidth = 900 ; 
@@ -15,10 +15,7 @@ window.onload = function()
     let snakee;
     let applee;
 
-    init(); 
-
-function init() 
-{
+const init = () => {
     canvas.width = canvasWidth ;
     canvas.height = canvasHeight ;
     canvas.style.border = "30px solid gray" ;
@@ -30,8 +27,7 @@ function init()
     launch();
     }
 
-function launch()
-    {
+const  launch = () => {
         snakee = new Snake([[6,4],[5,4],[4,4],[3,4],[2,4]],"right");
         applee = new Apple([10,10]);
         score = 0 ;
@@ -39,9 +35,7 @@ function launch()
         clearTimeout(timeout) ;
         refreshCanvas();
     }
-
-function refreshCanvas()
-{
+const refreshCanvas = ()=> {
     snakee.advance() ;
 if (snakee.checkCollision())
 {
@@ -67,13 +61,10 @@ while(applee.isOnSnake(snakee)) ;
     timeout = setTimeout(refreshCanvas,delay) ;
      }    
 }
-
-    function speedUp(){
+const speedUp = () =>{
         delay -=5;
     }
-
-
-function gameOver() {
+const gameOver = () => {
 
     ctx.save();
     ctx.font = "bold 70px sans-serif" ; 
@@ -90,9 +81,7 @@ function gameOver() {
     ctx.fillText("Appuyer sur la touche espace pour rejouer", centreX, centreY -120);
     ctx.restore();
 }
-
-function drawScore()
-{
+const drawScore = () => {
     ctx.save();
     ctx.font = "bold 200px sans-serif" ; 
     ctx.fillStyle = "gray" ; 
@@ -101,11 +90,7 @@ function drawScore()
     ctx.fillText(score.toString(), centreX, centreY);
     ctx.restore(); 
 }
-
-
-
-function drawBlock(ctx,position) 
-{
+const drawBlock = (ctx,position) => {
 const x = position[0] * blockSize ; 
 const y = position[1] * blockSize ; 
 ctx.fillRect(x,y,blockSize, blockSize) ; 
@@ -128,7 +113,7 @@ class Snake {
         drawBlock(ctx, this.body[i]) ;
     }
     ctx.restore() ;
-} ;
+}
     advance() {
     let nextPosition = this.body[0].slice();
 
@@ -153,7 +138,7 @@ class Snake {
         this.body.pop();
     else
         this.ateApple = false;
-} ;
+}
     setdirection(newDirection){
     let  allowedDirection;
     switch(this.direction)
@@ -174,7 +159,7 @@ class Snake {
     {
         this.direction = newDirection ;
     }
-} ;
+}
     checkCollision() {
 
     let wallCollision = false ;
@@ -204,7 +189,7 @@ class Snake {
 
     return wallCollision || snakeCollision ;
 
-} ;
+}
     isEatingApple(appleToEat){
     const head = this.body[0];
     if (head[0] === appleToEat.position[0] && head[1] === appleToEat.position[1])
@@ -294,6 +279,8 @@ default:
 
 
 } ;
+
+init();
 
 }
 
