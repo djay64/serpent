@@ -26,9 +26,8 @@ const init = () => {
     document.body.appendChild(canvas) ;
     launch();
     }
-
 const  launch = () => {
-        snakee = new Snake([[6,4],[5,4],[4,4],[3,4],[2,4]],"right");
+        snakee = new Snake("right",[6,4],[5,4],[4,4],[3,4],[2,4]);
         applee = new Apple([10,10]);
         score = 0 ;
         delay=100 ;
@@ -91,15 +90,12 @@ const drawScore = () => {
     ctx.restore(); 
 }
 const drawBlock = (ctx,position) => {
-const x = position[0] * blockSize ; 
-const y = position[1] * blockSize ; 
-ctx.fillRect(x,y,blockSize, blockSize) ; 
-
-
+    const[x,y] = position
+    ctx.fillRect(x*blockSize,y*blockSize,blockSize, blockSize) ;
 } 
 
 class Snake {
-    constructor(body, direction) {
+    constructor(direction, ...body) {
     this.body = body ;
     this.direction = direction ;
     this.ateApple = false ;
@@ -108,9 +104,9 @@ class Snake {
 
     ctx.save() ;
     ctx.fillStyle = "#ff0000" ;
-    for(let i =0; i<this.body.length; i++)
+    for(let block of this.body)
     {
-        drawBlock(ctx, this.body[i]) ;
+        drawBlock(ctx, block) ;
     }
     ctx.restore() ;
 }
@@ -164,10 +160,8 @@ class Snake {
 
     let wallCollision = false ;
     let snakeCollision = false ;
-    const head = this.body[0];
-    const rest = this.body.slice(1);
-    const snakeX = head[0] ;
-    const snakeY = head[1] ;
+    const [head,...rest] = this.body
+    const [snakeX,snakeY] = head;
     const minX = 0 ;
     const minY = 0;
     const maxX = widthBlocks -1 ;
@@ -178,9 +172,9 @@ class Snake {
     if (isNotBetweenHorizontalWalls ||isNotBetweenVerticalWalls )
     {wallCollision = true ; }
 
-    for(let i = 0; i< rest.length; i ++ )
+    for(let block of rest)
     {
-        if(snakeX == rest[i][0] && snakeY == rest[i][1])
+        if(snakeX == block[0] && snakeY == block[1])
         {
             snakeCollision = true ;
         }
@@ -202,7 +196,7 @@ class Snake {
 }
 
 class Apple {
-    constructor(position) {
+    constructor(position = [10,10]) {
         this.position = position ;
         this.position = position;
     }
@@ -229,17 +223,14 @@ class Apple {
 
         let isOnSnake = false ;
 
-        for (let i = 0 ; i <snakeToCheck.body.length; i++)
+        for (let block of snakeToCheck.body)
         {
-
-            if(this.position[0] === snakeToCheck.body[i][0] &&
-                this.position[1] === snakeToCheck.body[i][1]
+            if(this.position[0] === block[0] &&
+                this.position[1] === block[1]
             )
             {
-
                 isOnSnake = true ;
             }
-
         }
 
         return isOnSnake ;
@@ -248,8 +239,7 @@ class Apple {
 
 }
 
-
-document.onkeydown = function handleKeyDown(e)
+document.onkeydown =  (e) =>
 {
 
     const key = e.keyCode ; 
