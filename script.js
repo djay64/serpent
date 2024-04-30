@@ -14,6 +14,7 @@ window.onload = () =>
     let timeout ;
     let snakee;
     let applee;
+    let audio = new Audio("stranger-things-124008.mp3");
 
 const init = () => {
     canvas.width = canvasWidth ;
@@ -31,6 +32,7 @@ const  launch = () => {
         applee = new Apple([10,10]);
         score = 0 ;
         delay=100 ;
+        audio.play();
         clearTimeout(timeout) ;
         refreshCanvas();
     }
@@ -38,21 +40,23 @@ const refreshCanvas = ()=> {
     snakee.advance() ;
 if (snakee.checkCollision())
 {
-     gameOver() ; 
+     gameOver() ;
+     audio.pause() ;
 }
 else {
     if(snakee.isEatingApple(applee))
     {
         snakee.ateApple = true ; 
-        score ++ ; 
+        score ++ ;
+        if(score % 5 == 0 && score !=0){
+            speedUp();
+        }
 do {
     applee.setNewPosition() ; 
 }
 while(applee.isOnSnake(snakee)) ;
     }
-    if(score % 5 == 0 && score !=0){
-        speedUp();
-    }
+
     ctx.clearRect(0,0,canvasWidth, canvasHeight) ;
     drawScore(); 
     snakee.draw(); 
@@ -64,7 +68,6 @@ const speedUp = () =>{
         delay -=5;
     }
 const gameOver = () => {
-
     ctx.save();
     ctx.font = "bold 70px sans-serif" ; 
     ctx.fillStyle = "black" ; 
