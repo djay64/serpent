@@ -1,5 +1,5 @@
 import Game from "./game"
-
+import "babel-polyfill"
 
 window.onload = () => {
 
